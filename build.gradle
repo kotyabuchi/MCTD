@@ -1,0 +1,35 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.7.0'
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+}
+
+group 'com.github.kotyabuchi'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://papermc.io/repo/repository/maven-public/'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation 'io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT'
+    api 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0'
+    api 'io.insert-koin:koin-core:3.2.0'
+
+}
+
+shadowJar {
+    destinationDirectory.set(file ("E:\\Program\\Minecraft\\MCTDServer\\plugins"))
+    configurations = [project.configurations.compileClasspath]
+    dependencies {
+        exclude(dependency('io.papermc.paper:paper-api'))
+    }
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
